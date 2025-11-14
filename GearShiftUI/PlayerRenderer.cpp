@@ -1,28 +1,48 @@
 #include "PlayerRenderer.h"
 #include "IPlayer.h"
 #include <memory>
+#include <SDL2/SDL_image.h>
+#include <iostream>
 
+PlayerRenderer::PlayerRenderer(SDL_Renderer* renderer) {
+    color = { 0, 0, 0, 0 };  // black
 
-PlayerRenderer::PlayerRenderer() {
-    color = { 50, 100, 255, 255 };  // blue TODO: make the actual player as a car 
+    //change player model here
+    const char* filePath = "assets/images/PlayerCar.png";
+
+    playerTexture = IMG_LoadTexture(renderer, filePath);
+    if (!playerTexture) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load texture '%s': %s", filePath, IMG_GetError());
+    } else {
+        SDL_Log("Texture '%s' loaded successfully.", filePath);
+    }
 }
 
-void PlayerRenderer::render(SDL_Renderer* rend, const std::shared_ptr<IPlayer> player)
-{
+PlayerRenderer::~PlayerRenderer() {
+    if (playerTexture) SDL_DestroyTexture(playerTexture);
+}
+
+//TO DO: make a different service for all SDL objects to add image over them
+void PlayerRenderer::drawTextureOverRect(SDL_Renderer* renderer, SDL_Rect rect) {
+    if (!playerTexture) return;
+    SDL_RenderCopy(renderer, playerTexture, NULL, &rect);
+}
+
+void PlayerRenderer::render(SDL_Renderer* rend, const std::shared_ptr<IPlayer> player) {
     SDL_Rect rect = {
-                (int)player->getX(),
-                (int)player->getY(),
-                player->getWidth(),
-                player->getHeight()
-            };
-        
-            // draw filled square
-            SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
-            SDL_RenderFillRect(rend, &rect);
-        
-            // draw white border
-            SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-            SDL_RenderDrawRect(rend, &rect);
+        static_cast<int>(player->getX()),
+        static_cast<int>(player->getY()),
+        player->getWidth(),
+        player->getHeight()
+    };
+
+    SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(rend, &rect);
+
+    SDL_SetRenderDrawColor(rend, 0, 0, 0, 0); //black outline
+    SDL_RenderDrawRect(rend, &rect);
+
+    drawTextureOverRect(rend, rect);
 }
 
 void PlayerRenderer::setColor(Uint8 r, Uint8 g, Uint8 b) {

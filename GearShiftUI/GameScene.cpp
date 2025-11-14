@@ -12,7 +12,8 @@ void GameScene::onEnter() {
 	}
 
 	// Initialize rendering components for gameplay
-	playerRenderer = std::make_unique<PlayerRenderer>();
+	playerRenderer = std::make_unique<PlayerRenderer>(renderer->getSDLRenderer());
+
 	if (!playerRenderer) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GameScene: Failed to initialize player renderer");
 	}

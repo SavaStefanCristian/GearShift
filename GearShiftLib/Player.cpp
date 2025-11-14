@@ -3,7 +3,7 @@
 
 Player::Player(float startX, float startY)
     : x(startX), y(startY), vx(0), vy(0), speed(300.0f),
-    width(50), height(50), active(true),
+    width(150), height(170), active(true),
     boundMaxX(1920), boundMaxY(1080) {
 }
 

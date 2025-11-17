@@ -1,6 +1,6 @@
 #pragma once
 
-class IPlayer
+class IGameObject
 {
 public:
 	virtual float getX() const = 0;
@@ -8,5 +8,5 @@ public:
 	virtual int getWidth() const = 0;
 	virtual int getHeight() const = 0;
 	virtual bool isActive() const = 0;
-	virtual ~IPlayer() = default;
+	virtual ~IGameObject() = default;
 };

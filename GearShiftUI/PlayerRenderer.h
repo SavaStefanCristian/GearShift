@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
-#include "IPlayer.h"
+#include "IGameObject.h"
 #include "SpriteManager.h"
 #include <memory>
 
@@ -15,7 +15,7 @@ public:
     PlayerRenderer(SDL_Renderer* renderer);
     ~PlayerRenderer();
 
-    void render(SDL_Renderer* rend, const std::shared_ptr<IPlayer> player);
+    void render(SDL_Renderer* rend, const std::shared_ptr<IGameObject> player);
 
     void setColor(Uint8 r, Uint8 g, Uint8 b);
 };

@@ -27,7 +27,7 @@
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerAdapter.cpp" />
+    <ClCompile Include="GameObjectAdapter.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -39,9 +39,11 @@
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IInputState.h" />
-    <ClInclude Include="IPlayer.h" />
+    <ClInclude Include="IGameObject.h" />
+    <ClInclude Include="ObjectType.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerAdapter.h" />
+    <ClInclude Include="GameObjectAdapter.h" />
+    <ClInclude Include="SpriteType.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>

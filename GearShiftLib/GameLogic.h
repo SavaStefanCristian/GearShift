@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "FabricPhysics.h"
 #include "IInputState.h"
-#include "IPlayer.h"
+#include "IGameObject.h"
 #include "CollisionManager.h"
 
 
@@ -20,8 +20,8 @@ private:
     std::shared_ptr<Player> player;
     std::shared_ptr<Player> player2;
     std::unique_ptr<Fabric> fabric;
-	std::shared_ptr<IPlayer> playerAdapter;
-	std::shared_ptr<IPlayer> playerAdapter2;
+	std::shared_ptr<IGameObject> playerAdapter;
+	std::shared_ptr<IGameObject> playerAdapter2;
 
     // game state
     GameState currentState;
@@ -46,12 +46,12 @@ public:
     void endGame();
 
     // getters - safe accessors with null checks
-    std::shared_ptr<IPlayer> getPlayer() { return playerAdapter; }
-    const std::shared_ptr<IPlayer> getPlayer() const { return playerAdapter; }
+    std::shared_ptr<IGameObject> getPlayer() { return playerAdapter; }
+    const std::shared_ptr<IGameObject> getPlayer() const { return playerAdapter; }
 
 	// SECOND PLAYER FOR TESTING PURPOSES
-    std::shared_ptr<IPlayer> getPlayer2() { return playerAdapter2; }
-    const std::shared_ptr<IPlayer> getPlayer2() const { return playerAdapter2; }
+    std::shared_ptr<IGameObject> getPlayer2() { return playerAdapter2; }
+    const std::shared_ptr<IGameObject> getPlayer2() const { return playerAdapter2; }
     
     // Fabric access - safe with null checks
     Fabric* getFabric() { return fabric.get(); }

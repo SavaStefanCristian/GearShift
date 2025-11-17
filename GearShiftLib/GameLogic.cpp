@@ -1,6 +1,6 @@
 #include "GameLogic.h"
 #include <SDL2/SDL.h>
-#include "PlayerAdapter.h"
+#include "GameObjectAdapter.h"
 
 GameLogic::GameLogic(int screenW, int screenH)
     : screenWidth(screenW), screenHeight(screenH),
@@ -67,13 +67,13 @@ void GameLogic::startGame() {
     float centerY = screenHeight / 2.0f - 25;
     player = Player::create(centerX,centerY);
     player->setBounds(screenWidth, screenHeight);
-	playerAdapter = std::make_shared<PlayerAdapter>(player);
+	playerAdapter = std::make_shared<GameObjectAdapter>(player);
 
     //Second player for testing
     player2 = Player::create(centerX + 200, centerY + 200);
     player2->setBounds(screenWidth, screenHeight);
 	//player2->getTransform().setFixed(true); // make second player static for testing
-	playerAdapter2 = std::make_shared<PlayerAdapter>(player2);
+	playerAdapter2 = std::make_shared<GameObjectAdapter>(player2);
 
     // reset game stats
     speed = 0;

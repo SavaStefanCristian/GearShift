@@ -1,5 +1,5 @@
 #include "PlayerRenderer.h"
-#include "IPlayer.h"
+#include "IGameObject.h"
 #include "SpriteManager.h"
 #include <memory>
 #include <SDL2/SDL_image.h>
@@ -20,7 +20,7 @@ PlayerRenderer::~PlayerRenderer() {
     if (playerTexture) SDL_DestroyTexture(playerTexture);
 }
 
-void PlayerRenderer::render(SDL_Renderer* rend, const std::shared_ptr<IPlayer> player) {
+void PlayerRenderer::render(SDL_Renderer* rend, const std::shared_ptr<IGameObject> player) {
     SDL_Rect rect = {
         static_cast<int>(player->getX()),
         static_cast<int>(player->getY()),

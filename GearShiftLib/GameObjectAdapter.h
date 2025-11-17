@@ -1,20 +1,20 @@
 #pragma once
-#include "IPlayer.h"
+#include "IGameObject.h"
 #include <memory>
 
 
-class PlayerAdapter : public IPlayer {
+class GameObjectAdapter : public IGameObject {
 public:
 	float getX() const override;
 	float getY() const override;
 	int getWidth() const override;
 	int getHeight() const override;
 	bool isActive() const override;
-	PlayerAdapter(std::shared_ptr<class Player> p);
+	GameObjectAdapter(std::shared_ptr<class GameObject> obj);
 
 
 private:
-	std::shared_ptr<class Player> player;
+	std::shared_ptr<class GameObject> object;
 
 
 

@@ -2,11 +2,14 @@
 #include <algorithm>
 
 Player::Player(float startX, float startY)
-	: GameObject{ startX, startY }, vx{ 0 }, vy{ 0 }, speed{ 300.0f },
-	width{ 150 }, height{ 170 }, active{ true },
+	: GameObject{ startX, startY, 150, 170, true }, vx{ 0 }, vy{ 0 }, speed{ 300.0f },
 	boundMaxX{ 1920 }, boundMaxY{ 1080 }
 {
 }
+
+ObjectType Player::getType() const { return ObjectType::PLAYER; }
+
+SpriteType Player::getSprite() const { return SpriteType::PLAYER; }
 
 std::shared_ptr<Player> Player::create(float startX, float startY)
 {

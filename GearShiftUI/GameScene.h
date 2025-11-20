@@ -1,5 +1,6 @@
 #pragma once
 #include "FuelTimer.h"
+#include "ScoreManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "InputHandler.h"
@@ -17,6 +18,7 @@ private:
     
     std::unique_ptr<ObjectRenderer> objectRenderer;
     std::unique_ptr<FuelTimer> fuelTimer;
+    std::unique_ptr<ScoreManager> scoreManager;
 
 public:
     GameScene(Renderer* rend, SceneMgr* mgr, GameLogic* logic, InputHandler* input);

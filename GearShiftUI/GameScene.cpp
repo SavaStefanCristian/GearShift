@@ -14,6 +14,8 @@ void GameScene::onEnter() {
 	// Initialize rendering components for gameplay
 	objectRenderer = std::make_unique<ObjectRenderer>(renderer->getSDLRenderer());
 	fuelTimer = std::make_unique<FuelTimer>(10.0f, 850, 20, 300, 20, renderer->getSDLRenderer());
+	scoreManager = std::make_unique<ScoreManager>(renderer->getSDLRenderer());
+
 
 	if (!objectRenderer) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GameScene: Failed to initialize player renderer");
@@ -60,6 +62,9 @@ void GameScene::update(float dt) {
 	if (gameLogic && inputHandler) {
 		gameLogic->update(dt, *inputHandler);
 	}
+
+	if (scoreManager) scoreManager->update(dt);
+
 	fuelTimer->update(dt);
 	if (fuelTimer->isFinished()) {
 		SDL_Log("FuelTimer finished!");
@@ -87,6 +92,7 @@ void GameScene::render() {
 	}
 
 	// TODO: Render game HUD (speed, lap time, score, fuel, lives)
+	if (scoreManager) scoreManager->render();
 	fuelTimer->render(sdlRend);
 	renderer->present();
 }

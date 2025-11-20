@@ -154,6 +154,7 @@
     <ClCompile Include="ObjectRenderer.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteMapper.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="ObjectRenderer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteMapper.h" />
     <ClInclude Include="WaveEffect.h" />

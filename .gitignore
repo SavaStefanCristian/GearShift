@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+# Visual Paradigm
+
+**/Diagrams/*.vpp.lck
+**/Diagrams/*.vpp.bak_*

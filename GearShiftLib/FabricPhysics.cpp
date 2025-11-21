@@ -1,4 +1,5 @@
 #include "FabricPhysics.h"
+#include <cmath>
 #include <algorithm>
 
 Fabric::Fabric(int width, int height, float spacing)
@@ -16,6 +17,10 @@ Fabric::Fabric(int width, int height, float spacing)
             pts.push_back(p);
         }
     }
+}
+
+std::shared_ptr<IFabric> Fabric::create(int width, int height, float spacing) {
+    return std::shared_ptr<IFabric>(new Fabric(width, height, spacing));
 }
 
 void Fabric::update(float dt) {

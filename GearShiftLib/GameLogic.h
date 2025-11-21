@@ -1,52 +1,44 @@
 #pragma once
 #include <memory>
+#include "IGame.h"
 #include "Player.h"
-#include "FabricPhysics.h"
 #include "IInputState.h"
 #include "IGameObject.h"
 #include "CollisionManager.h"
 
-
-enum class GameState {
-	Menu,
-	Playing,
-	Paused,
-	GameOver
-};
-
-class GameLogic {
+class GameLogic : public IGame {
 public:
-	GameLogic(int screenW, int screenH);
+
+	static std::shared_ptr<IGame> create(int screenW, int screenH);
 
 	// core update loop
-	void update(float dt, const IInputState& input);
+	void update(float dt, const IInputState& input) override;
 
 	// state management
-	void startGame();
-	void pauseGame();
-	void resumeGame();
-	void endGame();
+	void startGame() override;
+	void pauseGame() override;
+	void resumeGame() override;
+	void endGame() override;
 
-	const std::vector<std::shared_ptr<IGameObject>>& getGameObjects() const;
+	const std::vector<std::shared_ptr<IGameObject>>& getGameObjects() const override;
 
 
 	// Fabric access - safe with null checks
-	Fabric* getFabric() { return fabric.get(); }
-	const Fabric* getFabric() const { return fabric.get(); }
+	std::shared_ptr<class IFabric> getFabric() override;
+	const std::shared_ptr<class IFabric> getFabric() const override;
 
-	GameState getState() const { return currentState; }
-	float getTime() const { return gameTime; }
-	float getSpeed() const { return speed; }
-	int getScore() const { return score; }
-	float getLapTime() const { return lapTime; }
+	GameState getState() const override { return currentState; }
+	float getTime() const override { return gameTime; }
+	int getScore() const override { return score; }
 
 	// game logic
-	void applyMouseForce(int x, int y, bool pressed);
+	void applyMouseForce(int x, int y, bool pressed) override;
 
 private:
+	GameLogic(int screenW, int screenH);
 	void scaleToCamera();
 
-	std::unique_ptr<Fabric> fabric;
+	std::shared_ptr<class IFabric> fabric;
 	std::shared_ptr<class Camera> mainCamera;
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
 	std::vector<std::shared_ptr<IGameObject>> objectAdapters;
@@ -60,8 +52,6 @@ private:
 	int screenWidth, screenHeight;
 
 	// game stats -> reference 
-	float speed;
 	int score;
-	float lapTime;
 
 };

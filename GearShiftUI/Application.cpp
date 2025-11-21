@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "GameLogic.h"
 
 Application::Application()
 	: running(false), lastTime(0) {
@@ -17,7 +18,7 @@ void Application::initializeComponents() {
 	renderer = std::make_unique<Renderer>(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Create game logic
-	gameLogic = std::make_unique<GameLogic>(WINDOW_WIDTH, WINDOW_HEIGHT);
+	gameLogic = GameLogic::create(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Create input handler
 	inputHandler = std::make_unique<InputHandler>();
@@ -28,7 +29,7 @@ void Application::initializeComponents() {
 void Application::initializeScenes() {
 	// Create menu scene with shared resources
 	auto menuScene = std::make_shared<MenuScene>(
-		renderer.get(), &sceneMgr, gameLogic.get(), inputHandler.get()
+		renderer.get(), &sceneMgr, gameLogic, inputHandler.get()
 	);
 	if (!menuScene) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Application: Failed to create menu scene");
@@ -37,7 +38,7 @@ void Application::initializeScenes() {
 
 	// Create game scene with shared resources
 	auto gameScene = std::make_shared<GameScene>(
-		renderer.get(), &sceneMgr, gameLogic.get(), inputHandler.get()
+		renderer.get(), &sceneMgr, gameLogic, inputHandler.get()
 	);
 	if (!gameScene) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Application: Failed to create game scene");

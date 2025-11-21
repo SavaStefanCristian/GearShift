@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "InputHandler.h"
-#include "GameLogic.h"
 
 class Application {
 private:
@@ -14,7 +13,7 @@ private:
 
     // Core components
     std::unique_ptr<Renderer> renderer;
-    std::unique_ptr<GameLogic> gameLogic;
+    std::shared_ptr<class IGame> gameLogic;
     std::unique_ptr<InputHandler> inputHandler;
     SceneMgr sceneMgr;
 

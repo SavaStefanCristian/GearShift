@@ -5,14 +5,14 @@
 #include "Renderer.h"
 #include "InputHandler.h"
 #include "ObjectRenderer.h"
-#include "GameLogic.h"
+#include "IGame.h"
 #include <memory>
 
 class GameScene : public Scene {
 private:
     Renderer* renderer;
     SceneMgr* sceneMgr;
-    GameLogic* gameLogic;        
+    std::weak_ptr<IGame> game;        
     InputHandler* inputHandler;  
 
     
@@ -21,7 +21,7 @@ private:
     std::unique_ptr<ScoreManager> scoreManager;
 
 public:
-    GameScene(Renderer* rend, SceneMgr* mgr, GameLogic* logic, InputHandler* input);
+    GameScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input);
     ~GameScene() override = default;
 
     void update(float dt) override;

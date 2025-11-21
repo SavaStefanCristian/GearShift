@@ -1,8 +1,8 @@
 #include "MenuScene.h"
 
 
-MenuScene::MenuScene(Renderer* rend, SceneMgr* mgr, GameLogic* logic, InputHandler* input)
-	: renderer(rend), sceneMgr(mgr), gameLogic(logic), inputHandler(input),
+MenuScene::MenuScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input)
+	: renderer(rend), sceneMgr(mgr), game(logic), inputHandler(input),
 	font(nullptr), carTexture(nullptr) {
 }
 
@@ -12,7 +12,7 @@ MenuScene::~MenuScene() {
 
 void MenuScene::onEnter() {
 	// Validate required components
-	if (!renderer || !gameLogic || !inputHandler) {
+	if (!renderer || game.expired() || !inputHandler) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "MenuScene: Missing required component (renderer, gameLogic, or inputHandler)");
 		return;
 	}
@@ -45,8 +45,8 @@ void MenuScene::onEnter() {
 
 	// Set button callback to transition to game
 	playBtn->setClick([this]() {
-		if (gameLogic) {
-			gameLogic->startGame();
+		if (auto gameShared = game.lock()) {
+			gameShared->startGame();
 		}
 		if (sceneMgr) {
 			sceneMgr->change("Game");
@@ -129,18 +129,20 @@ void MenuScene::update(float dt) {
 	}
 
 	// Update game logic fabric physics
-	if (gameLogic) {
-		gameLogic->update(dt, *inputHandler);
+	if (auto gameShared = game.lock()) {
+		gameShared->update(dt, *inputHandler);
+
+		// Apply mouse force for visual effect
+		if (inputHandler && inputHandler->isMousePressed()) {
+			gameShared->applyMouseForce(
+				inputHandler->getMouseX(),
+				inputHandler->getMouseY(),
+				true
+			);
+		}
 	}
 
-	// Apply mouse force for visual effect
-	if (inputHandler && inputHandler->isMousePressed() && gameLogic) {
-		gameLogic->applyMouseForce(
-			inputHandler->getMouseX(),
-			inputHandler->getMouseY(),
-			true
-		);
-	}
+
 
 	// Update CRT effect
 	if (crt) {
@@ -166,10 +168,12 @@ void MenuScene::render() {
 	SDL_RenderClear(sdlRend);
 
 	// Render wave background
-	if (wave && gameLogic && gameLogic->getFabric()) {
-		wave->update(0.016f, gameLogic->getTime());
-		wave->render(sdlRend, gameLogic->getFabric()->getPts(),
-			gameLogic->getFabric()->getW(), gameLogic->getFabric()->getH());
+	if (auto gameShared = game.lock()) {
+		if (wave && gameShared->getFabric()) {
+			wave->update(0.016f, gameShared->getTime());
+			wave->render(sdlRend, gameShared->getFabric()->getPts(),
+				gameShared->getFabric()->getW(), gameShared->getFabric()->getH());
+		}
 	}
 
 	// Render car

@@ -40,6 +40,9 @@
     <ClInclude Include="FabricPhysics.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="IFabric.h" />
+    <ClInclude Include="IGame.h" />
     <ClInclude Include="IInputState.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="ObjectType.h" />

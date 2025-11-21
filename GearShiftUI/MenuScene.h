@@ -1,11 +1,11 @@
 #pragma once
 #include "SceneManager.h"
-#include "../GearShiftUI/Renderer.h"
-#include "../GearShiftUI/InputHandler.h"
-#include "../GearShiftUI/CRTEffect.h"
-#include "../GearShiftUI/WaveEffect.h"
-#include "../GearShiftUI/Button.h"
-#include "../GearShiftLib/GameLogic.h"
+#include "Renderer.h"
+#include "InputHandler.h"
+#include "CRTEffect.h"
+#include "WaveEffect.h"
+#include "Button.h"
+#include "IGame.h"
 #include <SDL2/SDL_ttf.h>
 #include <memory>
 
@@ -13,7 +13,7 @@ class MenuScene : public Scene {
 private:
     Renderer* renderer;
     SceneMgr* sceneMgr;
-    GameLogic* gameLogic;        
+    std::weak_ptr<IGame> game;        
     InputHandler* inputHandler;  
 
   
@@ -26,7 +26,7 @@ private:
     SDL_Rect carRect;
 
 public:
-    MenuScene(Renderer* rend, SceneMgr* mgr, GameLogic* logic, InputHandler* input);
+    MenuScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input);
     ~MenuScene() override;
 
     void update(float dt) override;

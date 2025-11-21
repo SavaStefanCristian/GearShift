@@ -3,15 +3,19 @@
 #include "GameObjectAdapter.h"
 #include "Camera.h"
 #include "BoxCollider.h"
+#include "FabricPhysics.h"
 
 GameLogic::GameLogic(int screenW, int screenH)
-	: collisionManager{ std::make_shared<CollisionManager>() }, 
-	fabric{ std::make_unique<Fabric>(130, 75, 16.0f) },
+	: collisionManager{ std::make_shared<CollisionManager>() },
+	fabric{ Fabric::create(130,75,16.0f) },
 	screenWidth(screenW), screenHeight(screenH),
 	currentState(GameState::Menu),
-	gameTime(0), speed(0), score(0), lapTime(0) {
-
+	gameTime(0), score(0) {
 	// player created when game starts (not in menu)
+}
+
+std::shared_ptr<IGame> GameLogic::create(int screenW, int screenH) {
+	return std::shared_ptr<IGame>(new GameLogic(screenW, screenH));
 }
 
 void GameLogic::update(float dt, const IInputState& input) {
@@ -73,7 +77,7 @@ void GameLogic::startGame() {
 	mainCamera->getWorldTransform().setLockX(true);
 	gameObjects.push_back(mainCamera);
 
-	auto road1 = std::make_shared<GameObject>(centerX, centerY-400, 1400.0f, 720.0f, true);
+	auto road1 = std::make_shared<GameObject>(centerX, centerY - 400, 1400.0f, 720.0f, true);
 	road1->setSprite(SpriteType::ROAD);
 	gameObjects.push_back(road1);
 	objectAdapters.emplace_back(std::make_shared<GameObjectAdapter>(road1));
@@ -97,7 +101,7 @@ void GameLogic::startGame() {
 		objectAdapters.emplace_back(std::make_shared<GameObjectAdapter>(roadGuard));
 	}
 
-	auto road2 = std::make_shared<GameObject>(centerX, centerY+300, 1400.0f, 720.0f, true);
+	auto road2 = std::make_shared<GameObject>(centerX, centerY + 300, 1400.0f, 720.0f, true);
 	road2->setSprite(SpriteType::ROAD);
 	gameObjects.push_back(road2);
 	objectAdapters.emplace_back(std::make_shared<GameObjectAdapter>(road2));
@@ -110,11 +114,10 @@ void GameLogic::startGame() {
 	this->mainCamera->setParent(player);
 
 	// reset game stats
-	speed = 0;
 	score = 0;
-	lapTime = 0;
 	gameTime = 0;
 }
+
 
 void GameLogic::pauseGame() {
 	if (currentState == GameState::Playing) {
@@ -137,6 +140,10 @@ void GameLogic::endGame() {
 
 
 const std::vector<std::shared_ptr<IGameObject>>& GameLogic::getGameObjects() const { return objectAdapters; }
+
+// Fabric access - safe with null checks
+std::shared_ptr<class IFabric> GameLogic::getFabric() { return fabric; }
+const std::shared_ptr<class IFabric> GameLogic::getFabric() const { return fabric; }
 
 void GameLogic::applyMouseForce(int x, int y, bool pressed) {
 	if (!fabric) {

@@ -1,12 +1,12 @@
 #include "GameScene.h"
 
-GameScene::GameScene(Renderer* rend, SceneMgr* mgr, GameLogic* logic, InputHandler* input)
-	: renderer(rend), sceneMgr(mgr), gameLogic(logic), inputHandler(input) {
+GameScene::GameScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input)
+	: renderer(rend), sceneMgr(mgr), game(logic), inputHandler(input) {
 }
 
 void GameScene::onEnter() {
 	// Validate required components
-	if (!renderer || !gameLogic) {
+	if (!renderer || game.expired()) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "GameScene: Missing required component (renderer or gameLogic)");
 		return;
 	}
@@ -30,8 +30,8 @@ void GameScene::onExit() {
 	if (objectRenderer) {
 		objectRenderer.reset();
 	}
-	if (gameLogic) {
-		gameLogic->endGame();
+	if (auto gameShared = game.lock()) {
+		gameShared->endGame();
 	}
 
 	SDL_Log("GameScene: Exited and cleaned up rendering components");
@@ -52,16 +52,18 @@ void GameScene::handleEvent(SDL_Event& e) {
 	}
 }
 
+
 void GameScene::update(float dt) {
 	// Refresh keyboard state for current frame
 	if (inputHandler) {
 		inputHandler->updateKeyboard();
+
+		// Update game logic with current input state
+		if (auto gameShared = game.lock()) {
+			gameShared->update(dt, *inputHandler);
+		}
 	}
 
-	// Update game logic with current input state
-	if (gameLogic && inputHandler) {
-		gameLogic->update(dt, *inputHandler);
-	}
 
 	if (scoreManager) scoreManager->update(dt);
 
@@ -82,8 +84,8 @@ void GameScene::render() {
 	// Clear background with dark color
 	renderer->clear(20, 20, 30);
 
-	if (gameLogic) {
-		auto gameObjects = gameLogic->getGameObjects();
+	if (auto gameShared = game.lock()) {
+		auto gameObjects = gameShared->getGameObjects();
 		for (const auto& obj : gameObjects) {
 			if (obj && obj->isActive() && objectRenderer) {
 				objectRenderer->render(obj);

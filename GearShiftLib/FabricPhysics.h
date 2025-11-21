@@ -1,35 +1,25 @@
 #pragma once
-#include <vector>
-#include <cmath>
+#include "IFabric.h"
+#include <memory>
 
-struct Pt {
-    float x, y;
-    float ox, oy;
-    float fx, fy;
-    bool pinned;
+class Fabric : public IFabric{
+public:
+    static std::shared_ptr<IFabric> create(int width, int height, float spacing);
+    void update(float dt) override;
+    void applyForce(float mx, float my, float radius, float strength) override;
+    void reset() override;
 
-    Pt(float _x, float _y) : x(_x), y(_y), ox(_x), oy(_y),
-        fx(0), fy(0), pinned(false) {
-    }
-};
+    const std::vector<Pt>& getPts() const override { return pts; }
+    int getW() const override { return w; }
+    int getH() const override { return h; }
+    Pt& getPt(int x, int y) override;
 
-class Fabric {
 private:
+    Fabric(int width, int height, float spacing);
     std::vector<Pt> pts;
     int w, h;
     float space;
     float damp;
     float stiff;
 
-public:
-    Fabric(int width, int height, float spacing);
-
-    void update(float dt);
-    void applyForce(float mx, float my, float radius, float strength);
-    void reset();
-
-    const std::vector<Pt>& getPts() const { return pts; }
-    int getW() const { return w; }
-    int getH() const { return h; }
-    Pt& getPt(int x, int y);
 };

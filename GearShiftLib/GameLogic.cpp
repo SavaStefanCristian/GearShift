@@ -173,3 +173,9 @@ void GameLogic::scaleToCamera()
 		SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "GameLogic: Cannot scale to camera, mainCamera is null");
 	}
 }
+
+void GameLogic::onFuelEmpty() {
+	SDL_Log("GameLogic: Fuel empty ? GAME OVER");
+	currentState = GameState::GameOver;
+}
+

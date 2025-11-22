@@ -5,6 +5,7 @@
 #include "IInputState.h"
 #include "IGameObject.h"
 #include "CollisionManager.h"
+#include "GameScene.h"
 
 class GameLogic : public IGame {
 public:
@@ -26,6 +27,7 @@ public:
 	// Fabric access - safe with null checks
 	std::shared_ptr<class IFabric> getFabric() override;
 	const std::shared_ptr<class IFabric> getFabric() const override;
+	void onFuelEmpty() override;
 
 	GameState getState() const override { return currentState; }
 	float getTime() const override { return gameTime; }

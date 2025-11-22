@@ -51,13 +51,7 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FuelTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteMapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,13 +89,7 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FuelTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteMapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IScene.h">

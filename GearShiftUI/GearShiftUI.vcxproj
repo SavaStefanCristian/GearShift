@@ -147,14 +147,12 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CRTEffect.cpp" />
-    <ClCompile Include="FuelTimer.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="ObjectRenderer.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteMapper.cpp" />
@@ -164,7 +162,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CRTEffect.h" />
-    <ClInclude Include="FuelTimer.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="IScene.h" />
@@ -172,7 +169,6 @@
     <ClInclude Include="ObjectRenderer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteMapper.h" />
     <ClInclude Include="WaveEffect.h" />

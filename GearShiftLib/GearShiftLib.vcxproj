@@ -25,10 +25,12 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="FabricPhysics.cpp" />
+    <ClCompile Include="FuelManager.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameObjectAdapter.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +40,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="FabricPhysics.h" />
+    <ClInclude Include="FuelManager.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
@@ -48,6 +51,7 @@
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameObjectAdapter.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SpriteType.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vec2.h" />
@@ -111,6 +115,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../GearShiftUI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +131,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../GearShiftUI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +147,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../GearShiftUI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +163,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../GearShiftUI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

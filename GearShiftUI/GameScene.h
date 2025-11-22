@@ -31,4 +31,6 @@ public:
 
     void onEnter() override;
     void onExit() override;
+
+    bool isFuelFinished() const;
 };

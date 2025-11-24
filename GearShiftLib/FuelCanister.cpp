@@ -35,7 +35,8 @@ std::vector<std::shared_ptr<GameObject>> FuelCanister::create(
     objects.push_back(fuel);
 
     if (auto collisionManagerShared = collisionManager.lock()) {
-        collisionManagerShared->addCollider<BoxCollider>(fuel, 50.0f, 50.0f);
+        auto collider = collisionManagerShared->addCollider<BoxCollider>(fuel, 50.0f, 50.0f);
+        collider->setTrigger(true);
     }
 
     return objects;

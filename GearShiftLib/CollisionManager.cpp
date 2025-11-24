@@ -17,9 +17,11 @@ void CollisionManager::update()
 	for (size_t i = 0; i < colliderList.size(); ++i) {
 		auto colliderA = colliderList[i].lock();
 		if (!colliderA) continue;
+		if (!colliderA->getMasterObject()->isActive()) continue;
 		for (size_t j = i + 1; j < colliderList.size(); ++j) {
 			auto colliderB = colliderList[j].lock();
 			if (!colliderB) continue;
+			if (!colliderB->getMasterObject()->isActive()) continue;
 			if (colliderA->getMasterObject()->getWorldTransform().getFixed() && colliderB->getMasterObject()->getWorldTransform().getFixed()) continue;
 			auto collisionOpt = colliderA->checkCollisionWith(*colliderB);
 			if (collisionOpt) {

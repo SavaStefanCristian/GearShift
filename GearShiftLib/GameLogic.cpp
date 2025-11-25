@@ -7,6 +7,7 @@
 #include "TrafficBaseNPC.h"
 #include "FuelCanister.h"
 #include "FuelManager.h"
+#include "ScoreManager.h"
 
 GameLogic::GameLogic(int screenW, int screenH)
 	: collisionManager{ std::make_shared<CollisionManager>() },
@@ -60,6 +61,8 @@ void GameLogic::update(float dt, IInputState& input) {
 
 		// check for pause input
 
+		scoreManager->update(dt);
+
 		fuelManager->update(dt);
 		if(fuelManager->isFinished()) {
 			onFuelEmpty();
@@ -88,6 +91,7 @@ void GameLogic::update(float dt, IInputState& input) {
 void GameLogic::startGame() {
 	currentState = GameState::Playing;
 
+	this->scoreManager = std::make_shared<ScoreManager>();
 	this->fuelManager = std::make_shared<FuelManager>(10.0f);
 
 	// create player at center
@@ -218,6 +222,8 @@ void GameLogic::onFuelEmpty() {
 	currentState = GameState::GameOver;
 }
 
+std::shared_ptr<class IScoreManager> GameLogic::getScoreManager() const { return scoreManager; }
+
 void GameLogic::spawnFuelCanister()
 {
 	float centerX = screenWidth / 2.0f;
@@ -248,7 +254,7 @@ void GameLogic::setFuelRecharged()
 	this->fuelManager->reset();
 }
 
-std::shared_ptr<class IFuelManager> GameLogic::getFuelManager() {
+std::shared_ptr<class IFuelManager> GameLogic::getFuelManager() const {
 	return this->fuelManager;
 }
 

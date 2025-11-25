@@ -19,10 +19,10 @@ public:
 	virtual const std::shared_ptr<IFabric> getFabric() const = 0;
 	virtual GameState getState() const = 0;
 	virtual float getTime() const = 0;
-	virtual int getScore() const = 0;
 	virtual void applyMouseForce(int x, int y, bool pressed) = 0;
 
-	virtual std::shared_ptr<class IFuelManager> getFuelManager() = 0;
+	virtual std::shared_ptr<class IScoreManager> getScoreManager() const = 0;
+	virtual std::shared_ptr<class IFuelManager> getFuelManager() const = 0;
 
 	virtual ~IGame() = default;
 };

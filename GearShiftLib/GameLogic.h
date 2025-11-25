@@ -30,14 +30,14 @@ public:
 
 	GameState getState() const override { return currentState; }
 	float getTime() const override { return gameTime; }
-	int getScore() const override { return score; }
+	std::shared_ptr<class IScoreManager> getScoreManager() const;
 	bool isGameOver() const{ return currentState == GameState::GameOver; }
 	void spawnFuelCanister();
 
 	// game logic
 	void applyMouseForce(int x, int y, bool pressed) override;
 
-	std::shared_ptr<class IFuelManager> getFuelManager() override;
+	std::shared_ptr<class IFuelManager> getFuelManager() const override;
 
 	void setFuelRecharged();
 	void onPlayerEliminated() override;
@@ -50,7 +50,8 @@ private:
 
 	void onFuelEmpty();
 	std::shared_ptr<class IFabric> fabric;
-	std::shared_ptr<class IFuelManager> fuelManager;
+	std::shared_ptr<class FuelManager> fuelManager;
+	std::shared_ptr<class ScoreManager> scoreManager;
 	std::shared_ptr<class Camera> mainCamera;
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
 	std::vector<std::shared_ptr<IGameObject>> objectAdapters;

@@ -1,6 +1,6 @@
 #pragma once
 #include "FuelRenderer.h"
-#include "ScoreManager.h"
+#include "ScoreRenderer.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "InputHandler.h"
@@ -19,7 +19,7 @@ private:
     
     std::unique_ptr<ObjectRenderer> objectRenderer;
     std::unique_ptr<FuelRenderer> fuelRenderer;
-	std::unique_ptr<ScoreManager> scoreManager;
+	std::unique_ptr<ScoreRenderer> scoreRenderer;
     TTF_Font* font;
 
 public:

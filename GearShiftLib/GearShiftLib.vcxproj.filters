@@ -66,9 +66,6 @@
     <ClCompile Include="FuelCanister.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IFuelManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameLogic.h">
@@ -150,6 +147,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IFuelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IScoreManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

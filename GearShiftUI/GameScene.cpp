@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "GameOverScene.h"
 #include "FuelRenderer.h"
+#include "IScoreManager.h"
 
 GameScene::GameScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input)
 	: renderer(rend), sceneMgr(mgr), game(logic), inputHandler(input), font(nullptr) {
@@ -14,7 +15,7 @@ void GameScene::onEnter() {
 
 	objectRenderer = std::make_unique<ObjectRenderer>(renderer->getSDLRenderer());
 	fuelRenderer = std::make_unique<FuelRenderer>(850, 20, 300, 20, renderer->getSDLRenderer());
-	scoreManager = std::make_unique<ScoreManager>(renderer->getSDLRenderer());
+	scoreRenderer = std::make_unique<ScoreRenderer>(renderer->getSDLRenderer());
 
 	// Initialize font for paused text
 	if (TTF_WasInit() == 0) {
@@ -60,12 +61,10 @@ void GameScene::update(float dt) {
 		}
 	}
 
-	if (scoreManager) scoreManager->update(dt);
-
 	if (auto gameShared = game.lock()) {
 		if (gameShared->getState() == GameState::GameOver) {
 
-			int finalScore = scoreManager->getScore();
+			int finalScore = gameShared->getScoreManager()->getScore();
 
 			if (auto gameOverScene = sceneMgr->getScene("GameOver")) {
 				auto gos = std::dynamic_pointer_cast<GameOverScene>(gameOverScene);
@@ -98,9 +97,9 @@ void GameScene::render() {
 			}
 		}
 		if (fuelRenderer) fuelRenderer->render(gameShared->getFuelManager());
+		if (scoreRenderer) scoreRenderer->render(gameShared->getScoreManager());
 	}
 
-	if (scoreManager) scoreManager->render();
 
 	// Render "Paused" text if game is paused
 	if (auto gameShared = game.lock()) {

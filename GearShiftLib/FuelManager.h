@@ -8,8 +8,8 @@ public:
 
     virtual ~FuelManager() = default;
 
-    void update(float dt) override;
-    void reset() override;
+    void update(float dt);
+    void reset();
     bool isFinished() const override;
     float getCurrentTime() const override;
     float getMaxTime() const override;

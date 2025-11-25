@@ -1,28 +1,15 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <string>
+#include "IScoreManager.h"
 
-class ScoreManager {
+class ScoreManager : public IScoreManager{
 public:
-    ScoreManager(SDL_Renderer* renderer);
-    ~ScoreManager();
-
+	ScoreManager();
+	~ScoreManager() = default;
     void update(float dt);
-    void render();
     void reset();
-	int getScore() { return score; }
+	int getScore() override;
 
 private:
-    SDL_Renderer* renderer;
-    TTF_Font* font;
-
     int score;
     float accumulator;
-
-    SDL_Color color;
-    SDL_Texture* texture;
-    SDL_Rect rect;
-
-    void updateTexture();
 };

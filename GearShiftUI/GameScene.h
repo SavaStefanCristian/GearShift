@@ -1,5 +1,5 @@
 #pragma once
-#include "FuelTimer.h"
+#include "FuelRenderer.h"
 #include "ScoreManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -18,7 +18,7 @@ private:
 
     
     std::unique_ptr<ObjectRenderer> objectRenderer;
-    std::unique_ptr<FuelTimer> fuelTimer;
+    std::unique_ptr<FuelRenderer> fuelRenderer;
 	std::unique_ptr<ScoreManager> scoreManager;
     TTF_Font* font;
 
@@ -34,8 +34,6 @@ public:
     void onEnter() override;
     void onExit() override;
 
-    bool isFuelFinished() const;
-	void collectFuelCanister();
 private:
     void renderPausedText();
 };

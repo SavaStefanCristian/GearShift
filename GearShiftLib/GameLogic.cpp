@@ -1,5 +1,4 @@
 #include "GameLogic.h"
-#include <SDL2/SDL.h>
 #include "GameObjectAdapter.h"
 #include "Camera.h"
 #include "BoxCollider.h"
@@ -7,6 +6,7 @@
 #include "RoadSegment.h"
 #include "TrafficBaseNPC.h"
 #include "FuelCanister.h"
+#include "FuelManager.h"
 
 GameLogic::GameLogic(int screenW, int screenH)
 	: collisionManager{ std::make_shared<CollisionManager>() },
@@ -59,6 +59,13 @@ void GameLogic::update(float dt, IInputState& input) {
 		// TODO: Add game logic (lap counting, collision, etc.)
 
 		// check for pause input
+
+		fuelManager->update(dt);
+		if(fuelManager->isFinished()) {
+			onFuelEmpty();
+		}
+
+
 		if (input.isPausePressed()) {
 			pauseGame();
 		}
@@ -80,6 +87,8 @@ void GameLogic::update(float dt, IInputState& input) {
 
 void GameLogic::startGame() {
 	currentState = GameState::Playing;
+
+	this->fuelManager = std::make_shared<FuelManager>(10.0f);
 
 	// create player at center
 	float centerX = screenWidth / 2.0f;
@@ -206,7 +215,6 @@ void GameLogic::scaleToCamera()
 
 
 void GameLogic::onFuelEmpty() {
-	SDL_Log("GameLogic: Fuel empty ? GAME OVER");
 	currentState = GameState::GameOver;
 }
 
@@ -237,7 +245,11 @@ void GameLogic::spawnFuelCanister()
 
 void GameLogic::setFuelRecharged()
 {
-	isFuelRecharged = !isFuelRecharged;
+	this->fuelManager->reset();
+}
+
+std::shared_ptr<class IFuelManager> GameLogic::getFuelManager() {
+	return this->fuelManager;
 }
 
 void GameLogic::onPlayerEliminated()

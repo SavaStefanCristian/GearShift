@@ -1,31 +1,26 @@
 #pragma once
-#include <SDL2/SDL.h>
 #include "SpriteManager.h"
+#include "IFuelManager.h"
 
-class FuelTimer : public SpriteManager {
+class FuelManager : public IFuelManager{
+public:
+    FuelManager(float duration);
+
+    virtual ~FuelManager() = default;
+
+    void update(float dt) override;
+    void reset() override;
+    bool isFinished() const override;
+    float getCurrentTime() const override;
+    float getMaxTime() const override;
+
+
+
 private:
     float maxTime;
     float currentTime;
-    SDL_Rect barRect;
 
-    SDL_Color bgColor;
-    SDL_Color fillColor;
 
-    int squareSize;
-    int spacing;
-    SDL_Rect spriteSquare;
 
-    const char* fuelSpritePath = "assets/images/FuelCanister.png";
-    SDL_Texture* fuelTexture = nullptr;
 
-public:
-    FuelTimer(float duration, int x, int y, int w, int h, SDL_Renderer* renderer);
-
-    ~FuelTimer();
-
-    void update(float dt);
-    void reset();
-    bool isFinished() const;
-
-    void render(SDL_Renderer* renderer);
 };

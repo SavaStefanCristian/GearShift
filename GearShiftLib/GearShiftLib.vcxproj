@@ -29,6 +29,7 @@
     <ClCompile Include="FuelManager.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IFuelManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameObjectAdapter.cpp" />
     <ClCompile Include="PlayerTrigger.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="IFabric.h" />
+    <ClInclude Include="IFuelManager.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="IInputState.h" />
     <ClInclude Include="IGameObject.h" />

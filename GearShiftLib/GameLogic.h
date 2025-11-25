@@ -27,7 +27,6 @@ public:
 	// Fabric access - safe with null checks
 	std::shared_ptr<class IFabric> getFabric() override;
 	const std::shared_ptr<class IFabric> getFabric() const override;
-	void onFuelEmpty() override;
 
 	GameState getState() const override { return currentState; }
 	float getTime() const override { return gameTime; }
@@ -37,10 +36,10 @@ public:
 
 	// game logic
 	void applyMouseForce(int x, int y, bool pressed) override;
-	bool isFuelRecharged = false;
-	void setFuelRecharged();
-	bool getIsFuelRecharged() const { return isFuelRecharged; }
 
+	std::shared_ptr<class IFuelManager> getFuelManager() override;
+
+	void setFuelRecharged();
 	void onPlayerEliminated() override;
 
 private:
@@ -49,7 +48,9 @@ private:
 	void createRoadSegments();
 	void createNPCs();
 
+	void onFuelEmpty();
 	std::shared_ptr<class IFabric> fabric;
+	std::shared_ptr<class IFuelManager> fuelManager;
 	std::shared_ptr<class Camera> mainCamera;
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
 	std::vector<std::shared_ptr<IGameObject>> objectAdapters;

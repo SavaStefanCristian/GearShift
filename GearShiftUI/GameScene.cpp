@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "GameOverScene.h"
+#include "FuelRenderer.h"
 
 GameScene::GameScene(Renderer* rend, SceneMgr* mgr, std::weak_ptr<IGame> logic, InputHandler* input)
 	: renderer(rend), sceneMgr(mgr), game(logic), inputHandler(input), font(nullptr) {
@@ -12,7 +13,7 @@ void GameScene::onEnter() {
 	}
 
 	objectRenderer = std::make_unique<ObjectRenderer>(renderer->getSDLRenderer());
-	fuelTimer = std::make_unique<FuelTimer>(10.0f, 850, 20, 300, 20, renderer->getSDLRenderer());
+	fuelRenderer = std::make_unique<FuelRenderer>(850, 20, 300, 20, renderer->getSDLRenderer());
 	scoreManager = std::make_unique<ScoreManager>(renderer->getSDLRenderer());
 
 	// Initialize font for paused text
@@ -48,11 +49,6 @@ void GameScene::handleEvent(SDL_Event& e) {
 	if (inputHandler) {
 		inputHandler->update(e);
 	}
-
-	//if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-	//    SDL_Log("GameScene: ESC ? Back to Menu");
-	//    if (sceneMgr) sceneMgr->change("Menu");
-	//}
 }
 
 void GameScene::update(float dt) {
@@ -65,13 +61,6 @@ void GameScene::update(float dt) {
 	}
 
 	if (scoreManager) scoreManager->update(dt);
-	if (fuelTimer) fuelTimer->update(dt);
-
-	if (fuelTimer && fuelTimer->isFinished()) {
-		if (auto gameShared = game.lock()) {
-			gameShared->onFuelEmpty();
-		}
-	}
 
 	if (auto gameShared = game.lock()) {
 		if (gameShared->getState() == GameState::GameOver) {
@@ -88,12 +77,6 @@ void GameScene::update(float dt) {
 			SDL_Log("GameScene: Switching to GameOver scene");
 			sceneMgr->change("GameOver");
 			return;
-		}
-	}
-	if (auto gameShared = game.lock()) {
-		if (gameShared->getIsFuelRecharged()) {
-			collectFuelCanister();
-			gameShared->setFuelRecharged();
 		}
 	}
 
@@ -114,10 +97,10 @@ void GameScene::render() {
 				objectRenderer->render(obj);
 			}
 		}
+		if (fuelRenderer) fuelRenderer->render(gameShared->getFuelManager());
 	}
 
 	if (scoreManager) scoreManager->render();
-	if (fuelTimer) fuelTimer->render(sdlRend);
 
 	// Render "Paused" text if game is paused
 	if (auto gameShared = game.lock()) {
@@ -129,16 +112,6 @@ void GameScene::render() {
 	renderer->present();
 }
 
-bool GameScene::isFuelFinished() const {
-	return fuelTimer ? fuelTimer->isFinished() : false;
-}
-
-void GameScene::collectFuelCanister() {
-	if (fuelTimer) {
-		fuelTimer->reset();
-		SDL_Log("FuelTimer reset due to collecting a canister");
-	}
-}
 
 void GameScene::renderPausedText() {
 	if (!font || !renderer) return;

@@ -147,7 +147,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionTests.cpp" />
+    <ClCompile Include="GameLogicTests.cpp" />
+    <ClCompile Include="GameObjectTests.cpp" />
+    <ClCompile Include="PlayerTests.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TransformTests.cpp" />
+    <ClCompile Include="Vec2Tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

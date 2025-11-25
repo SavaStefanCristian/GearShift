@@ -6,7 +6,6 @@
 #include "IInputState.h"
 #include "IGameObject.h"
 #include "CollisionManager.h"
-#include "GameScene.h"
 
 class GameLogic : public IGame, public IPlayerListener, public std::enable_shared_from_this<GameLogic> {
 public:

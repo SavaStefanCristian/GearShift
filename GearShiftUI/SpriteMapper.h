@@ -3,9 +3,10 @@
 #include <unordered_map>
 #include "SpriteType.h"
 
-static class SpriteMapper {
+class SpriteMapper {
 public:
 	static const std::string getSpritePath(SpriteType sprite);
 private:
+	SpriteMapper();
 	static const std::unordered_map<SpriteType, std::string> spritePathMap;
 };

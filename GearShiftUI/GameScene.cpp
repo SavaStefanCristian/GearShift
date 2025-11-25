@@ -87,7 +87,7 @@ void GameScene::render() {
 
 	SDL_Renderer* sdlRend = renderer->getSDLRenderer();
 
-	renderer->clear(20, 20, 30);
+	renderer->clear(0, 0, 0);
 
 	if (auto gameShared = game.lock()) {
 		auto objs = gameShared->getGameObjects();

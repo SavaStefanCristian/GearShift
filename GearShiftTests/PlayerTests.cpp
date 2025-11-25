@@ -15,7 +15,7 @@ public:
     MOCK_METHOD(bool, isRightPressed, (), (const, override));
     MOCK_METHOD(bool, isAcceleratePressed, (), (const, override));
     MOCK_METHOD(bool, isBrakePressed, (), (const, override));
-    MOCK_METHOD(bool, isPausePressed, (), (const, override));
+    MOCK_METHOD(bool, isPausePressed, (), (override));
     MOCK_METHOD(int, getMouseX, (), (const, override));
     MOCK_METHOD(int, getMouseY, (), (const, override));
     MOCK_METHOD(bool, isMousePressed, (), (const, override));

@@ -1,5 +1,5 @@
 # GearShift
-### **Don't scratch the car, but drive it like you stole it!**
+### **Drive it like you stole it, but don't scratch the car!**
 
 #### A 2D game in which you drive a car on a road, avoiding other cars or... crashing into them.
 
